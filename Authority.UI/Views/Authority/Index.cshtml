@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table/bootstrap-table.min.js"></script>
+@(Html.BootstrapTable<Authority.Model.AuthorityViewModel>(Url.Action("List"))
+    .Apply(TableOption.showRefresh, TableOption.showToggle, TableOption.showColumns, TableOption.showPaginationSwitch).Apply(TableOption.toolbar, "#toolbar").Apply(TableOption.method,"POST")
+    )
