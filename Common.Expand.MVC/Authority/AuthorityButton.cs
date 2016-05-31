@@ -19,7 +19,13 @@ namespace Common.ExpandMVC.Authority
         /// <summary>
         /// ClassName
         /// </summary>
-        public string ClassName { set; get; } = "glyphicon-plus";
+        public string ClassName { set; get; } = "glyphicon glyphicon-plus";
+
+
+        /// <summary>
+        /// 点击函数
+        /// </summary>
+        public string ClickName { get; set; } = "AddModel";
 
         /// <summary>
         /// 返回html字符串
@@ -27,7 +33,7 @@ namespace Common.ExpandMVC.Authority
         /// <returns>   <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> 添加</button></returns>
         public override string ToString()
         {
-            return $" <button type = \"button\" class=\"btn btn-default\"> <i class=\"glyphicon {ClassName}\"></i>{Title}</button>";
+            return $" <button type = \"button\" class=\"btn btn-default\" onclick='{ClickName}()'> <i class=\" {ClassName}\"></i>{Title}</button>";
         }
 
     }

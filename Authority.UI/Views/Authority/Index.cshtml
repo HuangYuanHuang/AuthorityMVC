@@ -4,9 +4,110 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
-<script src="~/Scripts/bootstrap-table/bootstrap-table.min.js"></script>
-@(Html.BootstrapTable<Authority.Model.AuthorityViewModel>(Url.Action("List"))
-    .Apply(TableOption.showRefresh, TableOption.showToggle, TableOption.showColumns, TableOption.showPaginationSwitch).Apply(TableOption.toolbar, "#toolbar").Apply(TableOption.method,"POST")
-    )
+<h2>权限配置</h2>
+
+<link href="~/Content/Beyond/css/demo.min.css?v=1" rel="stylesheet" />
+
+@(Html.BootstrapTable<Authority.Model.AuthorityViewModel>("authorityTable", Url.Action("List")).Apply(m => m.Html, ColumnOption.formatter, "columnFormatter")
+    .Apply(TableOption.showRefresh, TableOption.showToggle, TableOption.showColumns,TableOption.clickToSelect).Apply(TableOption.toolbar, "#toolbar").Apply(TableOption.method, "POST")
+)
+
+<script type="text/javascript">
+
+    $("#modal-body").on('click', ".bs-glyphicons-list li", function (e) {
+        viewModel.Html($("span",this).attr("class"));
+
+    });
+
+    ko.validation.locale('zh-CN');
+    var authorityModel = function (name, className, jsName) {
+        this.Name = ko.observable(name).extend({ required: true });
+        this.ID = ko.observable(-1);
+        this.Html = ko.observable(className);
+        this.JsName = ko.observable(jsName).extend({ required: true });
+    }
+    var viewModel = new authorityModel("", "glyphicon glyphicon-plus", "");
+    viewModel.errors = ko.validation.group(viewModel);
+
+    function columnFormatter(value, row, index) {
+        return "<span class='" + value + "' ></span>";
+    }
+
+    function AddModel() {
+    
+        $("#myModalLabel").text("添加")
+        $("#modal-body").load('@Url.Action("Create")', function () {      
+            viewModel.ID(-1);
+            viewModel.Name("");
+            viewModel.JsName("");
+            viewModel.Html("glyphicon glyphicon-plus");
+            ko.applyBindings(viewModel, document.getElementById("authorith_form"));
+            $('#myModal').modal('show');
+
+        })
+
+    }
+    function EditModel() {
+        var nodes = $("#authorityTable").bootstrapTable("getSelections");
+        if (nodes.length < 1) {
+            $("#modal-alert").text("请选择要修改的数据");
+            $('#modal-danger').modal('show');
+        }
+        var item = nodes[0];
+        viewModel.ID(item.ID);
+        viewModel.JsName(item.JsName);
+        viewModel.Name(item.Name);
+        viewModel.Html(item.Html);
+        $("#myModalLabel").text("修改")
+        $("#modal-body").load('@Url.Action("Create")', function () {
+            ko.applyBindings(viewModel, document.getElementById("authorith_form"));
+            $('#myModal').modal('show');
+
+        })
+    }
+    function RemoveModel() {
+        var nodes = $("#authorityTable").bootstrapTable("getSelections");
+        if (nodes.length < 1) {
+            $("#modal-alert").text("请选择要删除的数据");
+            $('#modal-danger').modal('show');
+            return;
+        }
+        bootbox.confirm("确认要删除？", function (result) {
+            if (result) {
+                $.post('@Url.Action("Delete")'+'/' + nodes[0].ID, function (data) {
+                    if (data.state) {
+                        $('#authorityTable').bootstrapTable('refresh', { silent: true });
+                    } else {
+                      
+                        $("#modal-alert").text(data.message);
+                        $('#modal-danger').modal('show');
+                    }
+                }, 'json');
+            }
+        });
+    }
+
+    $("#btnSave").click(function () {
+        if (viewModel.errors().length === 0) {
+            var url = "@Url.Action("Create")";
+            if (ko.toJS(viewModel.ID) != -1) {
+                url = "@Url.Action("Update")";
+            }
+
+            $.post(url, $("#authorith_form").serialize(), function (data) {
+                if (data.state) {
+                    $('#myModal').modal('hide');
+                    $('#authorityTable').bootstrapTable('refresh', { silent: true });
+                }
+                else {
+                    $("#modal-alert").text(data.message);
+                    $('#modal-danger').modal('show');
+                }
+            });
+        }
+        else {
+
+            viewModel.errors.showAllMessages();
+        }
+    });
+</script>

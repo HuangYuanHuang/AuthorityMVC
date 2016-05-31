@@ -1,4 +1,4 @@
-﻿using Common.ExpandMVC.BootstrappTable.Support;
+﻿using Common.ExpandMVC.Support;
 
 namespace System.Web.Mvc
 {

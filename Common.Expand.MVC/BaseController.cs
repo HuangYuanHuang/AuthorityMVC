@@ -16,10 +16,13 @@ namespace Common.ExpandMVC
             if (CanLoadAuthority)
             {
                 BootstrapTableHelpers.LoadAuthorityEvent += LoadAutority;
+               // TreeGridHelpers.LoadTreeDateEvent += LoadTreeDate;
+                TreeGridHelpers.LoadAuthorityEvent += LoadAutority;
                 CanLoadAuthority = false;
             }
         }
 
+        protected virtual IEnumerable<BaseTreeViewModel> LoadTreeDate() => null;
         protected virtual string LoadAutority() => "";
         protected abstract Task<int> RemoveAsync(D id);
 

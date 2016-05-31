@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Common.ExpandMVC.BootstrappTable.Support
+namespace Common.ExpandMVC.Support
 {
     /// <exclude/>
     internal static class Extensions

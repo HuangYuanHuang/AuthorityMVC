@@ -12,41 +12,54 @@ namespace Authority.UI.Controllers
 {
     public class AuthorityController : BaseController<AuthorityViewModel, int>
     {
+        Authority.Service.AuthorityService service = new Service.AuthorityService();
         // GET: Authority
         public ActionResult Index()
         {
             return View();
         }
 
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        public ActionResult Vail()
+        {
+            return View();
+        }
         protected override string LoadAutority()
         {
-            BaseAuthority model = new BaseAuthority();
+            BaseAuthority model = new BaseAuthority(); //glyphicon glyphicon-trash
             model.ListAuthButtons.Add(new AuthorityButton());
             model.ListAuthButtons.Add(new AuthorityButton()
             {
-                ClassName = "glyphicon-edit",
+                ClassName = "glyphicon glyphicon-edit",
                 Title = "修改",
+                ClickName = "EditModel"
+            });
+            model.ListAuthButtons.Add(new AuthorityButton()
+            {
+                ClassName = "glyphicon glyphicon-trash",
+                Title = "删除",
+                ClickName = "RemoveModel"
             });
             return model.ToString();
         }
         protected override Task<int> AddAsync(AuthorityViewModel model)
         {
-            throw new NotImplementedException();
+            return service.AddOrUpdateAuthority(model);
         }
 
         protected override Task<AuthorityViewModel> DetailsAsync(int id)
         {
-            throw new NotImplementedException();
+            return service.GetAuthority(id);
         }
 
         protected override IEnumerable<AuthorityViewModel> ListViewModel()
         {
-            List<AuthorityViewModel> list = new List<AuthorityViewModel>()
-            {
-                new AuthorityViewModel() { Index=1,CreateTime=DateTime.Now,Html="",Name="添加",Value=1},
-                 new AuthorityViewModel() { Index=2,CreateTime=DateTime.Now,Html="",Name="修改",Value=2}
-            };
-            return list;
+            return service.GetAuthority();
         }
 
         protected override IEnumerable<AuthorityViewModel> ListViewModel(int id)
@@ -56,12 +69,12 @@ namespace Authority.UI.Controllers
 
         protected override Task<int> RemoveAsync(int id)
         {
-            throw new NotImplementedException();
+            return service.DeletaAuthority(id);
         }
 
         protected override Task<int> UpdateAsync(AuthorityViewModel model)
         {
-            throw new NotImplementedException();
+            return service.AddOrUpdateAuthority(model);
         }
     }
 }

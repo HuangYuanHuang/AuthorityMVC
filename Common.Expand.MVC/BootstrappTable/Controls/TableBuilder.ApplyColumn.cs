@@ -1,4 +1,4 @@
-﻿using Common.ExpandMVC.BootstrappTable.Support;
+﻿using Common.ExpandMVC.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;

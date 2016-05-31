@@ -1,4 +1,11 @@
 ﻿
+@{
+    ViewBag.Title = "Vail";
+    Layout = null;
+}
+
+
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -10,33 +17,31 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="~/Content/Beyond/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/Authority/Content/Beyond/img/favicon.png" type="image/x-icon">
 
     <!--Basic Styles-->
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Authority/Content/bootstrap.min.css" rel="stylesheet" />
 
     <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
-    <link href="~/Content/Beyond/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/Authority/Content/Beyond/css/font-awesome.min.css" rel="stylesheet" />
 
-    <link href="~/Content/Beyond/css/weather-icons.min.css" rel="stylesheet" />
+    <link href="/Authority/Content/Beyond/css/weather-icons.min.css" rel="stylesheet" />
     <!--Beyond styles-->
 
-    <link href="~/Content/Beyond/css/beyond.min.css" rel="stylesheet" />
-    <link href="~/Content/Beyond/css/typicons.min.css" rel="stylesheet" />
+    <link href="/Authority/Content/Beyond/css/beyond.min.css" rel="stylesheet" />
+    <link href="/Authority/Content/Beyond/css/typicons.min.css" rel="stylesheet" />
 
 
-    <link href="~/Content/Beyond/css/animate.min.css" rel="stylesheet" />
+    <link href="/Authority/Content/Beyond/css/animate.min.css" rel="stylesheet" />
     <link id="skin-link" href="" rel="stylesheet" type="text/css" />
 
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="~/Scripts/Beyond/jquery-2.0.3.min.js"></script>
-    <script src="~/Scripts/Beyond/skins.min.js"></script>
-    <link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
-    <script src="~/Scripts/bootstrap-table/bootstrap-table.min.js"></script>
-    <script src="~/Scripts/knockout-3.4.0.js"></script>
-    <script src="~/Scripts/knockout.validation.min.js"></script>
-    <script src="~/Scripts/Knockout-validation-zh-ch.js"></script>
-    <script src="~/Scripts/Beyond/bootbox/bootbox.js"></script>
+    <script src="/Authority/Scripts/Beyond/jquery-2.0.3.min.js"></script>
+    <script src="/Authority/Scripts/Beyond/skins.min.js"></script>
+    <link href="/Authority/Content/bootstrap-table.min.css" rel="stylesheet" />
+    <script src="/Authority/Scripts/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/Authority/Scripts/knockout-3.4.0.js"></script>
+    <script src="/Authority/Scripts/knockout.validation.min.js"></script>
     <style type="text/css">
         .validationMessage {
             color: #f00;
@@ -50,45 +55,6 @@
 <!-- /Head -->
 <!-- Body -->
 <body>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">添加</h4>
-                </div>
-                <div class="modal-body" id="modal-body">
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="btnSave">保存更改</button>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-danger" class="modal modal-message modal-danger fade" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <i class="glyphicon glyphicon-fire"></i>
-                </div>
-                <div class="modal-title">警告</div>
-
-                <div class="modal-body" id="modal-alert">You'vd done bad!</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">确认</button>
-                </div>
-            </div> <!-- / .modal-content -->
-        </div> <!-- / .modal-dialog -->
-    </div>
-
     <!-- Loading Container -->
     <div class="loading-container">
         <div class="loading-progress">
@@ -121,7 +87,7 @@
                     <a href="#" class="navbar-brand">
                         <small>
                             <!-- Beyond admin -->
-                            <img src="~/Content/Beyond/img/logo.png" alt="" />
+                            <img src="/Authority/Content/Beyond/img/logo.png" alt="" />
                         </small>
                     </a>
                 </div>
@@ -138,7 +104,7 @@
                             <li>
                                 <a class="login-area dropdown-toggle" data-toggle="dropdown">
                                     <div class="avatar" title="View your public profile">
-                                        @*<img src="/Content/Beyond/img/avatars/adam-jansen.jpg">*@
+
                                     </div>
                                     <section>
                                         <h2><span class="profile"><span>Authority</span></span></h2>
@@ -149,12 +115,6 @@
                                     <li class="username"><a></a></li>
                                     <li class="email"><a></a></li>
                                     <!--Avatar Area-->
-                                    @*<li>
-                                            <div class="avatar-area">
-                                                <img src="~/Content/Beyond/img/avatars/adam-jansen.jpg" class="avatar">
-                                                <span class="caption">Change Photo</span>
-                                            </div>
-                                        </li>*@
                                     <!--Avatar Area-->
                                     <li class="edit">
                                         <a href="profile.html" class="pull-left">Profile</a>
@@ -164,18 +124,18 @@
                                     <li class="theme-area">
                                         <ul class="colorpicker" id="skin-changer">
 
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="~/Content/Beyond/css/skins/blue.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="~/Content/Beyond/css/skins/azure.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="~/Content/Beyond/css/skins/teal.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="~/Content/Beyond/css/skins/green.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="~/Content/Beyond/css/skins/orange.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="~/Content/Beyond/css/skins/pink.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="~/Content/Beyond/css/skins/darkred.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="~/Content/Beyond/css/skins/purple.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="~/Content/Beyond/css/skins/darkblue.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="~/Content/Beyond/css/skins/gray.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="~/Content/Beyond/css/skins/black.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="~/Content/Beyond/css/skins/deepblue.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="/Authority/Content/Beyond/css/skins/blue.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="/Authority/Content/Beyond/css/skins/azure.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="/Authority/Content/Beyond/css/skins/teal.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="/Authority/Content/Beyond/css/skins/green.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="/Authority/Content/Beyond/css/skins/orange.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="/Authority/Content/Beyond/css/skins/pink.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="/Authority/Content/Beyond/css/skins/darkred.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="/Authority/Content/Beyond/css/skins/purple.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="/Authority/Content/Beyond/css/skins/darkblue.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="/Authority/Content/Beyond/css/skins/gray.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="/Authority/Content/Beyond/css/skins/black.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="/Authority/Content/Beyond/css/skins/deepblue.min.css"></a></li>
                                         </ul>
                                     </li>
                                     <!--/Theme Selector Area-->
@@ -240,26 +200,12 @@
                 <ul class="nav sidebar-menu">
                     <!--Dashboard-->
                     <li id="pageMain">
-                        <a href="~/">
+                        <a href="/Authority/">
                             <i class="menu-icon glyphicon glyphicon-home"></i>
                             <span class="menu-text"> 首页 </span>
                         </a>
                     </li>
                     <!--Databoxes-->
-                    @*<li>
-                            <a href="#" class="menu-dropdown">
-                                <i class="menu-icon fa fa-desktop"></i>
-                                <span class="menu-text"> 系统配置 </span>
-                                <i class="menu-expand"></i>
-                            </a>
-                            <ul class="submenu">
-                                <li>
-                                    <a href="elements.html">
-                                        <span class="menu-text">菜单管理</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>*@
                     <!--Widgets-->
 
                     <li id="basic_config">
@@ -270,14 +216,14 @@
                         </a>
                         <ul class="submenu">
                             <li id="basic_com">
-                                <a href="~/Authority">
+                                <a href="/Authority/Authority">
                                     <span class="menu-text">基本权限配置</span>
                                 </a>
                             </li>
                         </ul>
                         <ul class="submenu">
                             <li id="basic_product">
-                                <a href="~/Production/Index">
+                                <a href="/Authority/Production/Index">
                                     <span class="menu-text">产品管理</span>
                                 </a>
                             </li>
@@ -295,37 +241,37 @@
 
                         <ul class="submenu">
                             <li id="config_station">
-                                <a href="~/Station">
+                                <a href="/Authority/Station">
                                     <span class="menu-text">产品工位配置</span>
                                 </a>
                             </li>
                             <li id="config_groupStation">
-                                <a href="~/TemplateGroup">
+                                <a href="/Authority/TemplateGroup">
                                     <span class="menu-text">工位模板组配置</span>
                                 </a>
                             </li>
                             <li id="config_stationFile">
-                                <a href="~/StationFile">
+                                <a href="/Authority/StationFile">
                                     <span class="menu-text">工位文件配置</span>
                                 </a>
                             </li>
                             <li id="config_stationConfig">
-                                <a href="~/StationConfig">
+                                <a href="/Authority/StationConfig">
                                     <span class="menu-text">工位输入参数配置</span>
                                 </a>
                             </li>
                             <li id="config_stationOutConfig">
-                                <a href="~/StationOutConfig">
+                                <a href="/Authority/StationOutConfig">
                                     <span class="menu-text">工位输出参数配置</span>
                                 </a>
                             </li>
                             <li id="config_stationOutConfig1">
-                                <a href="~/StationOutConfig1">
+                                <a href="/Authority/StationOutConfig1">
                                     <span class="menu-text">工位输出参数配置1</span>
                                 </a>
                             </li>
                             <li id="config_stationOutConfig2">
-                                <a href="~/StationTest1">
+                                <a href="/Authority/StationTest1">
                                     <span class="menu-text">工位TEST1</span>
                                 </a>
                             </li>
@@ -342,13 +288,13 @@
 
                         <ul class="submenu">
                             <li id="task_order">
-                                <a href="~/Order">
+                                <a href="/Authority/Order">
                                     <span class="menu-text">任务单管理</span>
                                 </a>
 
                             </li>
                             <li id="task_create">
-                                <a href="~/Order/Create">
+                                <a href="/Authority/Order/Create">
                                     <span class="menu-text">创建任务单</span>
                                 </a>
                             </li>
@@ -374,7 +320,7 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="fa fa-home"></i>
-                            <a href="~/">首页</a>
+                            <a href="/Authority/">首页</a>
                         </li>
                         <li>
                             <a href="#">Elements</a>
@@ -405,8 +351,121 @@
                 <!-- /Page Header -->
                 <!-- Page Body -->
                 <div class="page-body">
-                    @RenderBody()
 
+
+
+
+                    <h2>Index</h2>
+
+                    <link href="/Authority/Content/Beyond/css/demo.min.css?v=1" rel="stylesheet" />
+                    <script src="/Authority/Scripts/Knockout-validation-zh-chjs.js"></script>
+
+                    <table data-click-to-select="true" data-method="POST"  data-pagination="true" data-show-columns="true" data-show-refresh="true" data-show-toggle="true"  data-toggle="table" data-toolbar="#toolbar" data-url="/Authority/Authority/List" id="authorityTable">
+                        <thead>
+                        <th data-field="State" data-radio="true"></th>
+                        <th data-field="Index">编号</th>
+                        <th data-field="Name">权限名称</th>
+                        <th data-field="Value">权限值</th>
+                        <th data-field="Html">图标</th>
+                        <th data-field="JsName">JavaScript名称</th>
+                        <th data-field="TimeStr">创建时间</th></thead>
+                        <div id="toolbar" class="btn-group"> <button type="button" class="btn btn-default" onclick='AddModel()'> <i class="glyphicon glyphicon-plus"></i>添加</button> <button type="button" class="btn btn-default" onclick='EditModel()'> <i class="glyphicon glyphicon-edit"></i>修改</button></div>
+                    </table>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">添加</h4>
+                                </div>
+                                <div class="modal-body" id="modal-body">
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="button" class="btn btn-primary" id="btnSave">保存更改</button>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="modal-danger" class="modal modal-message modal-danger fade" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <i class="glyphicon glyphicon-fire"></i>
+                                </div>
+                                <div class="modal-title">错误</div>
+
+                                <div class="modal-body" id="modal-alert">You'vd done bad!</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+                                </div>
+                            </div> <!-- / .modal-content -->
+                        </div> <!-- / .modal-dialog -->
+                    </div>
+
+                    <script type="text/javascript">
+
+                        $("#modal-body").on('click', ".bs-glyphicons-list li", function (e) {
+                            viewModel.Html($("span", this).attr("class"));
+
+                        });
+
+                        ko.validation.locale('zh-CN');
+                        var authorityModel = function (name, className, jsName) {
+                            this.Name = ko.observable(name).extend({ required: true });
+                            this.ID = ko.observable(-1);
+                            this.Html = ko.observable(className);
+                            this.JsName = ko.observable(jsName).extend({ required: true });
+                        }
+                        var viewModel = new authorityModel("", "glyphicon glyphicon-plus", "");
+                        viewModel.errors = ko.validation.group(viewModel);
+                        function AddModel() {
+
+                            $("#modal-body").load('/Authority/Authority/Create', function () {
+                                viewModel.ID(-1);
+                                viewModel.Name("");
+                                viewModel.JsName("");
+                                ko.applyBindings(viewModel, document.getElementById("authorith_form"));
+                                $('#myModal').modal('show');
+
+                            })
+
+                        }
+                        function EditModel() {
+
+                        }
+
+                        $("#btnSave").click(function () {
+                            if (viewModel.errors().length === 0) {
+                                var url = "/Authority/Authority/Create";
+                                if (ko.toJS(viewModel.ID) != -1) {
+                                    url = "/Authority/Authority/Update";
+                                }
+
+                                $.post(url, $("#authorith_form").serialize(), function (data) {
+                                    if (data.state) {
+                                        $('#myModal').modal('hide');
+                                        $('#authorityTable').bootstrapTable('refresh', { silent: true });
+                                    }
+                                    else {
+                                        $("#modal-alert").text(data.message);
+                                        $('#modal-danger').modal('show');
+                                    }
+                                });
+                            }
+                            else {
+
+                                viewModel.errors.showAllMessages();
+                            }
+                        });
+                    </script>
                     <!--Row Ends-->
                 </div>
                 <!-- /Page Body -->
@@ -417,16 +476,23 @@
         <!-- Main Container -->
 
     </div>
-
     <!--Basic Scripts-->
 
 
-    <script src="~/Scripts/Beyond/bootstrap.min.js"></script>
+    <script src="/Authority/Scripts/Beyond/bootstrap.min.js"></script>
     <!--Beyond Scripts-->
 
 
-    <script src="~/Scripts/Beyond/beyond.min.js"></script>
+    <script src="/Authority/Scripts/Beyond/beyond.min.js"></script>
 
+
+
+    <!-- Visual Studio Browser Link -->
+    <script type="application/json" id="__browserLink_initializationData">
+        {"appName":"Chrome","requestId":"bbabb21a595844da9abd3a384e568328"}
+    </script>
+    <script type="text/javascript" src="http://localhost:17375/8589eba44a424fe48100ac9642b63877/browserLink" async="async"></script>
+    <!-- End Browser Link -->
 
 </body>
 <!--  /Body -->

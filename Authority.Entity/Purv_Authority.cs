@@ -24,9 +24,11 @@ namespace Authority.Entity
 
         [Required]
         [Index("Index_Value", IsUnique = true)]
-        public int AuthorityValue { get; set; }
+        public long AuthorityValue { get; set; }
 
         public string Html { get; set; }
+
+        public string FunctionName { get; set; }
 
         [Required]
         public DateTime Creatime { get; set; }

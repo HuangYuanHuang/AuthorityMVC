@@ -1,4 +1,4 @@
-﻿using Common.ExpandMVC.BootstrappTable.Support;
+﻿using Common.ExpandMVC.Support;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -93,6 +93,10 @@ namespace Common.ExpandMVC.BootstrappTable.Controls
             {
                 column.Attributes.Add(ColumnOption.sortable.FieldName(), sortable.ToStringLower());
                 column.Attributes.Add(ColumnOption.sorter.FieldName(), sorter);
+            }
+            if (field == "State")
+            {
+                column.Attributes.Add("data-radio", "true");
             }
             column.InnerHtml = title;
             _columns.Add(column);

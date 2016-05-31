@@ -17,14 +17,18 @@ namespace Authority.Model
         public string Name { get; set; }
 
         [Display(Order = 2, Name = "权限值")]
-        public int Value { get; set; }
+        public long Value { get; set; }
 
         [Display(Order =3, Name = "图标")]
         public string Html { get; set; }
         [Display(AutoGenerateField = false)]
         public DateTime CreateTime { get; set; }
-        [Display(Order = 4, Name = "创建时间")]
+        [Display(Order = 5, Name = "创建时间")]
+    
         public string TimeStr { get { return CreateTime.ToString("yyyy-MM-dd HH:mm:ss"); } }
+
+        [Display(Order =4,Name ="JavaScript名称")]
+        public string JsName { get; set; }
     }
 
     public static class AuthorityViewModelExpad
@@ -41,7 +45,8 @@ namespace Authority.Model
                     ID = item.AuthorityID,
                     Index = index++,
                     Name = item.AuthorityName,
-                    Value = item.AuthorityValue
+                    Value = item.AuthorityValue,
+                    JsName=item.FunctionName
                 };
             }
         }
@@ -56,7 +61,8 @@ namespace Authority.Model
                 Html = item.Html,
                 ID = item.AuthorityID,
                 Name = item.AuthorityName,
-                Value = item.AuthorityValue
+                Value = item.AuthorityValue,
+                JsName=item.FunctionName
             };
         }
     }

@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.ExpandMVC.BootstrappTable.Support
+namespace Common.ExpandMVC.Support
 {
     /// <exclude/>
     [AttributeUsage(AttributeTargets.Field)]
