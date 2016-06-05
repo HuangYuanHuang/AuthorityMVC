@@ -37,6 +37,7 @@
 
         public virtual DbSet<Purv_UserModule> PurvUserModeules { set; get; }
 
+        public virtual DbSet<Purv_AppConfig> PurvAppConfigs { set; get; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Purv_User>().HasMany(b => b.Roles).WithMany(r => r.Users).Map(m =>

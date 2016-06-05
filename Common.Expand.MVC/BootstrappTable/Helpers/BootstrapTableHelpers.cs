@@ -1,4 +1,5 @@
-﻿using Common.ExpandMVC.BootstrappTable.Controls;
+﻿using Common.ExpandMVC;
+using Common.ExpandMVC.BootstrappTable.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,10 +15,7 @@ namespace System.Web.Mvc
     /// </summary>
     public static class BootstrapTableHelpers
     {
-        /// <summary>
-        /// 加载按钮权限
-        /// </summary>
-        public static event Func<string> LoadAuthorityEvent;
+        
 
         /// <summary>
         /// Returns a BootstrapTable control.
@@ -29,7 +27,7 @@ namespace System.Web.Mvc
         /// <returns>Html representation of the control.</returns>
         public static ITableBuilder BootstrapTable(this HtmlHelper helper, string url = null, TablePaginationOption pagination = TablePaginationOption.none, object htmlAttributes = null)
         {
-            return new TableBuilder(null, url, pagination, htmlAttributes);
+            return new TableBuilder(null,null, url, pagination, htmlAttributes);
         }
 
         /// <summary>
@@ -43,7 +41,7 @@ namespace System.Web.Mvc
         /// <returns>Html representation of the control.</returns>
         public static ITableBuilder BootstrapTable(this HtmlHelper helper, string id, string url, TablePaginationOption pagination = TablePaginationOption.none, object htmlAttributes = null)
         {
-            return new TableBuilder(id, url, pagination, htmlAttributes);
+            return new TableBuilder(id,null, url, pagination, htmlAttributes);
         }
 
         /// <summary>
@@ -57,7 +55,7 @@ namespace System.Web.Mvc
         /// <returns>Html representation of the control.</returns>
         public static ITableBuilderT<TModel> BootstrapTable<TModel>(this HtmlHelper helper, string url = null, TablePaginationOption pagination = TablePaginationOption.none, object htmlAttributes = null)
         {
-            return BootstrapTable<TModel>(helper, null, url, pagination, htmlAttributes);
+            return BootstrapTable<TModel>(helper, url, pagination, htmlAttributes);
         }
 
         /// <summary>
@@ -70,10 +68,10 @@ namespace System.Web.Mvc
         /// <param name="pagination">Is pagination required.</param>
         /// <param name="htmlAttributes">An object that contains the HTML attributes to set for the element.</param>
         /// <returns>Html representation of the control.</returns>
-        public static ITableBuilderT<TModel> BootstrapTable<TModel>(this HtmlHelper helper, string id, string url, TablePaginationOption pagination = TablePaginationOption.none, object htmlAttributes = null)
+        public static ITableBuilderT<TModel> BootstrapTable<TModel>(this HtmlHelper helper, string id, GridTreeDataModel model, string url, TablePaginationOption pagination = TablePaginationOption.none, object htmlAttributes = null)
         {
-            var obj = new TableBuilderT<TModel>(id, url, pagination, htmlAttributes);
-            obj.LoadToobarButtonEvent += BootstrapTableHelpers.LoadAuthorityEvent;
+            var obj = new TableBuilderT<TModel>(id,model, url, pagination, htmlAttributes);
+        
             return obj;
         }
     }

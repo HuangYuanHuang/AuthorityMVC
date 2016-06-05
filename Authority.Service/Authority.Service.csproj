@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AuthorityService.cs" />
     <Compile Include="BaseService.cs" />
+    <Compile Include="ModuleService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

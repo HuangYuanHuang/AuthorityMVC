@@ -14,16 +14,32 @@ namespace Authority.UI.Controllers
         // GET: Module
         public ActionResult Index()
         {
+            return View(new GridTreeDataModel() { TreeModels = LoadTreeDate(), Authoritys = LoadAutority() });
+        }
+        public ActionResult Create()
+        {
             return View();
         }
 
-        protected override IEnumerable<BaseTreeViewModel> LoadTreeDate()
+        [ChildActionOnly]
+        public ActionResult ModuleTree()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public JsonResult Tree()
+        {
+            return Json(new object[] { LoadTreeDate().BuildTreeView() });
+        }
+        protected IEnumerable<BaseTreeViewModel> LoadTreeDate()
         {
             List<ModuleViewModel> list = new List<ModuleViewModel>()
             {
-                new ModuleViewModel() { ID=0,Name="父节点",ParentID=-1},
-                new ModuleViewModel() { ID=1,Name="子节点-1",ParentID=0},
-                 new ModuleViewModel() { ID=2,Name="子节点-1",ParentID=0},
+                new ModuleViewModel() { ID=0,Name="父节点",ParentID=-1,AuthorityStr="添加 修改 删除",Url="/Module/Index"},
+                new ModuleViewModel() { ID=1,Name="子节点-1",ParentID=0,AuthorityStr="添加 修改 删除",Url="/Module/Index"},
+                new ModuleViewModel() { ID=2,Name="子节点-1",ParentID=0,AuthorityStr="添加 修改 删除",Url="/Module/Index"},
+                new ModuleViewModel() { ID=3,Name="子节点-1-1",ParentID=2,AuthorityStr="添加 修改 删除",Url="/Module/Index"},
             };
             return list;
         }

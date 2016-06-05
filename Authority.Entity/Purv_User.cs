@@ -14,6 +14,10 @@ namespace Authority.Entity
         public DateTime AddDateTime { get; set; }
 
         public string AppID { get; set; }
+        public BaseEntity()
+        {
+            AddDateTime = DateTime.Now;
+        }
     }
 
     [Table("T_Purv_User")]
@@ -23,7 +27,7 @@ namespace Authority.Entity
         public Purv_User()
         {
             UserId = Guid.NewGuid().ToString();
-            AddDateTime = DateTime.Now;
+          
         }
         [Key]
         public string UserId { get; set; }

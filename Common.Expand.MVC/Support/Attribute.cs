@@ -24,6 +24,13 @@ namespace Common.ExpandMVC.Support
     }
 
     /// <exclude/>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class TreeTextAttribute : Attribute
+    {
+        /// <exclude/>
+        public string Value { get; set; }
+    }
+    /// <exclude/>
     internal static class FieldAttributeExtensions
     {
         /// <exclude/>

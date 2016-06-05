@@ -15,16 +15,21 @@ namespace Common.ExpandMVC.TreeGrid.Controls
     {
         private readonly TagBuilder builder;
         private List<TagBuilder> columns = new List<TagBuilder>();
+        string authStrhtml = "";
 
-        public event Func<IEnumerable<TModel>> LoadTreeDateEvent;
-        public event Func<string> LoadToobarButtonEvent;
+
+        private IEnumerable<BaseTreeViewModel> listDatas;
+
+
         public string ToHtmlString()
         {
-            return builder.InnerHtml;
-        }
-        public TreeGridBuilder(string url, string id = null, string tableClass = null, object htmlAttributes = null)
-        {
 
+            return authStrhtml + "\r\n" + builder.ToString(TagRenderMode.Normal);
+        }
+        public TreeGridBuilder(GridTreeDataModel model, string id = null, string tableClass = null, object htmlAttributes = null)
+        {
+            authStrhtml = model.Authoritys.ToString();
+            this.listDatas = model.TreeModels;
             builder = new TagBuilder("table");
             string className = "table";
             if (id != null)
@@ -84,8 +89,12 @@ namespace Common.ExpandMVC.TreeGrid.Controls
             var tag = new TagBuilder("td");
             if (display != null && !string.IsNullOrEmpty(display.GetName()))
             {
-
-                tag.SetInnerText(pair.Value.GetValue(value).ToString());
+                if (pair.Value.Name == "State")
+                {
+                    tag.InnerHtml = "<input type='radio' name='check'/>";
+                }
+                else
+                    tag.SetInnerText(pair.Value.GetValue(value).ToString());
             }
 
 
@@ -94,12 +103,17 @@ namespace Common.ExpandMVC.TreeGrid.Controls
 
         public void ApplyDataCoumn()
         {
-            if (LoadTreeDateEvent != null)
+
+            foreach (var item in listDatas)
             {
-                foreach (var item in LoadTreeDateEvent())
+                var tagBuilder = ApplyTrColumnHtml(LoadBody, item);
+
+                if (item.ParentID != -1)
                 {
-                    builder.InnerHtml += ApplyTrColumnHtml(LoadBody, item);
+                    tagBuilder.AddCssClass("treegrid-parent-" + item.ParentID);
                 }
+                tagBuilder.AddCssClass("treegrid-" + item.ID);
+                builder.InnerHtml += tagBuilder;
             }
         }
     }

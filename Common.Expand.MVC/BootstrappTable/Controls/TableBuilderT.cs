@@ -16,8 +16,8 @@ namespace Common.ExpandMVC.BootstrappTable.Controls
     internal partial class TableBuilderT<TModel> : TableBuilder, IColumnBuilderT<TModel>
     {
         /// <exclude/>
-        public TableBuilderT(string id = null, string url = null, TablePaginationOption sidePagination = TablePaginationOption.none, object htmlAttributes = null)
-            : base(id, url, sidePagination, htmlAttributes)
+        public TableBuilderT(string id = null, GridTreeDataModel model=null, string url = null, TablePaginationOption sidePagination = TablePaginationOption.none, object htmlAttributes = null)
+            : base(id,model, url, sidePagination, htmlAttributes)
         {
             typeof(TModel).GetSortedProperties().ToDictionary(x => x.Name, x => x).ForEach(pair =>
             {

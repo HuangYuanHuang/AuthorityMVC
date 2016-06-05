@@ -1,4 +1,4 @@
-﻿
+﻿@model Common.ExpandMVC.GridTreeDataModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,10 +8,9 @@
 
 <link href="~/Content/Beyond/css/demo.min.css?v=1" rel="stylesheet" />
 
-@(Html.BootstrapTable<Authority.Model.AuthorityViewModel>("authorityTable", Url.Action("List")).Apply(m => m.Html, ColumnOption.formatter, "columnFormatter")
+@(Html.BootstrapTable<Authority.Model.AuthorityViewModel>("authorityTable",Model, Url.Action("List")).Apply(m => m.Html, ColumnOption.formatter, "columnFormatter")
     .Apply(TableOption.showRefresh, TableOption.showToggle, TableOption.showColumns,TableOption.clickToSelect).Apply(TableOption.toolbar, "#toolbar").Apply(TableOption.method, "POST")
 )
-
 <script type="text/javascript">
 
     $("#modal-body").on('click', ".bs-glyphicons-list li", function (e) {

@@ -16,7 +16,7 @@ namespace Authority.UI.Controllers
         // GET: Authority
         public ActionResult Index()
         {
-            return View();
+            return View(new GridTreeDataModel() { Authoritys = LoadAutority() });
         }
 
 
@@ -29,24 +29,7 @@ namespace Authority.UI.Controllers
         {
             return View();
         }
-        protected override string LoadAutority()
-        {
-            BaseAuthority model = new BaseAuthority(); //glyphicon glyphicon-trash
-            model.ListAuthButtons.Add(new AuthorityButton());
-            model.ListAuthButtons.Add(new AuthorityButton()
-            {
-                ClassName = "glyphicon glyphicon-edit",
-                Title = "修改",
-                ClickName = "EditModel"
-            });
-            model.ListAuthButtons.Add(new AuthorityButton()
-            {
-                ClassName = "glyphicon glyphicon-trash",
-                Title = "删除",
-                ClickName = "RemoveModel"
-            });
-            return model.ToString();
-        }
+     
         protected override Task<int> AddAsync(AuthorityViewModel model)
         {
             return service.AddOrUpdateAuthority(model);

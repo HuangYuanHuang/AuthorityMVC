@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 namespace Authority.Model
 {
-    public class AuthorityViewModel : BaseViewModel
+    public class AuthorityViewModel : BaseGridViewModel
     {
         [Display(AutoGenerateField = false)]
         public int ID { get; set; }
 
         [Display(Order =1,Name ="权限名称")]
+       
         public string Name { get; set; }
 
         [Display(Order = 2, Name = "权限值")]

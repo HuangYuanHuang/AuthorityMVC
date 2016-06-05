@@ -72,6 +72,7 @@
     <Compile Include="BootstrappTable\Controls\TableBuilderT.cs" />
     <Compile Include="BootstrappTable\Helpers\BootstrapTableHelpers.cs" />
     <Compile Include="BootstrappTable\Helpers\BootstrapTableOptions.cs" />
+    <Compile Include="BootstrapTreeView.cs" />
     <Compile Include="Support\Attribute.cs" />
     <Compile Include="Support\Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

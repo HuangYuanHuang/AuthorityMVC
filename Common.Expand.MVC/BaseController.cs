@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.ExpandMVC.Authority;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,20 +11,8 @@ namespace Common.ExpandMVC
 {
     public abstract class BaseController<T, D> : Controller where T : BaseViewModel
     {
-        static bool CanLoadAuthority = true;
-        public BaseController()
-        {
-            if (CanLoadAuthority)
-            {
-                BootstrapTableHelpers.LoadAuthorityEvent += LoadAutority;
-               // TreeGridHelpers.LoadTreeDateEvent += LoadTreeDate;
-                TreeGridHelpers.LoadAuthorityEvent += LoadAutority;
-                CanLoadAuthority = false;
-            }
-        }
 
-        protected virtual IEnumerable<BaseTreeViewModel> LoadTreeDate() => null;
-        protected virtual string LoadAutority() => "";
+
         protected abstract Task<int> RemoveAsync(D id);
 
         protected abstract Task<int> UpdateAsync(T model);
@@ -36,7 +25,24 @@ namespace Common.ExpandMVC
         protected abstract IEnumerable<T> ListViewModel(D id);
 
         protected abstract IEnumerable<T> ListViewModel();
-
+        protected BaseAuthority LoadAutority()
+        {
+            BaseAuthority model = new BaseAuthority(); //glyphicon glyphicon-trash
+            model.ListAuthButtons.Add(new AuthorityButton());
+            model.ListAuthButtons.Add(new AuthorityButton()
+            {
+                ClassName = "glyphicon glyphicon-edit",
+                Title = "修改",
+                ClickName = "EditModel"
+            });
+            model.ListAuthButtons.Add(new AuthorityButton()
+            {
+                ClassName = "glyphicon glyphicon-trash",
+                Title = "删除",
+                ClickName = "RemoveModel"
+            });
+            return model;
+        }
 
         private static Dictionary<Type, ControllerDescriptor> controllerDescriptors = new Dictionary<Type, ControllerDescriptor>();
         private static object syncHelper = new object();

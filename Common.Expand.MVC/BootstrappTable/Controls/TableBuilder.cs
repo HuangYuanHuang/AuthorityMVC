@@ -19,7 +19,7 @@ namespace Common.ExpandMVC.BootstrappTable.Controls
         ///<exclude/>
         private TagBuilder _currentColumn = null;
 
-        public event Func<string> LoadToobarButtonEvent;
+        private event Func<string> LoadToobarButtonEvent;
         #region IHtmlString
         /// <inheritDoc/>
         public string ToHtmlString()
@@ -37,8 +37,10 @@ namespace Common.ExpandMVC.BootstrappTable.Controls
         #endregion
 
         /// <inheritDoc/>
-        public TableBuilder(string id = null, string url = null, TablePaginationOption? sidePagination = TablePaginationOption.none, object htmlAttributes = null)
+        public TableBuilder(string id = null, GridTreeDataModel model = null, string url = null, TablePaginationOption? sidePagination = TablePaginationOption.none, object htmlAttributes = null)
         {
+            if (model != null)
+                LoadToobarButtonEvent += () => model.Authoritys.ToString();
             _builder = new TagBuilder("table");
             if (!string.IsNullOrEmpty(id))
                 _builder.Attributes.Add("id", id);

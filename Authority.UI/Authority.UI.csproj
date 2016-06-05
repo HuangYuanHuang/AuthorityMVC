@@ -194,6 +194,8 @@
     <Content Include="Content\bootstrap-table.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-treeview.css" />
+    <Content Include="Content\bootstrap-treeview.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\treeGrid\css\jquery.treegrid.css" />
@@ -319,6 +321,8 @@
     <Content Include="Scripts\bootstrap-table\locale\bootstrap-table-vi-VN.min.js" />
     <Content Include="Scripts\bootstrap-table\locale\bootstrap-table-zh-CN.min.js" />
     <Content Include="Scripts\bootstrap-table\locale\bootstrap-table-zh-TW.min.js" />
+    <Content Include="Scripts\bootstrap-treeview.js" />
+    <Content Include="Scripts\bootstrap-treeview.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
@@ -366,6 +370,8 @@
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\Authority\Vail.cshtml" />
     <Content Include="Views\Module\Index.cshtml" />
+    <Content Include="Views\Module\Create.cshtml" />
+    <Content Include="Views\Module\ModuleTree.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -375,6 +381,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Authority.Entity\Authority.Entity.csproj">
+      <Project>{a9501d7a-ca86-4374-8910-0344c5927dc7}</Project>
+      <Name>Authority.Entity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Authority.Model\Authority.Model.csproj">
       <Project>{26ff3b7a-3635-480f-bf62-2b3f6d29a551}</Project>
       <Name>Authority.Model</Name>
