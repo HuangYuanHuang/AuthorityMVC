@@ -23,8 +23,8 @@ namespace Common.ExpandMVC.TreeGrid.Controls
 
         public string ToHtmlString()
         {
-
-            return authStrhtml + "\r\n" + builder.ToString(TagRenderMode.Normal);
+            //
+            return "<div class='fixed-table-toolbar'><div class='bars pull-left'>" + authStrhtml + "</div></div>\r\n" + builder.ToString(TagRenderMode.Normal);
         }
         public TreeGridBuilder(GridTreeDataModel model, string id = null, string tableClass = null, object htmlAttributes = null)
         {
@@ -91,7 +91,8 @@ namespace Common.ExpandMVC.TreeGrid.Controls
             {
                 if (pair.Value.Name == "State")
                 {
-                    tag.InnerHtml = "<input type='radio' name='check'/>";
+                   
+                    tag.InnerHtml = "<label><input name=\"form-field-radio\" type=\"radio\" /><span class=\"text\"></span></label> ";
                 }
                 else
                     tag.SetInnerText(pair.Value.GetValue(value).ToString());

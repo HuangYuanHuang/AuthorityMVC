@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfigService.cs" />
     <Compile Include="AuthorityService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="ModuleService.cs" />
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\Authority.Model\Authority.Model.csproj">
       <Project>{26ff3b7a-3635-480f-bf62-2b3f6d29a551}</Project>
       <Name>Authority.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Expand.MVC\Common.ExpandMVC.csproj">
+      <Project>{9dd9409b-30fe-4652-9c47-c3134f9f51f8}</Project>
+      <Name>Common.ExpandMVC</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common.UnitOfWork\Common.UnitOfWork.csproj">
       <Project>{07be927b-c588-4b41-a988-4042256a0cad}</Project>

@@ -1,0 +1,99 @@
+﻿@model Common.ExpandMVC.GridTreeDataModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>APP配置</h2>
+
+@(Html.BootstrapTable<Authority.Model.AppConfigViewModel>("appConfigTable", Model, Url.Action("List"))
+    .Apply(TableOption.showRefresh, TableOption.showToggle, TableOption.showColumns, TableOption.clickToSelect).Apply(TableOption.toolbar, "#toolbar").Apply(TableOption.method, "POST")
+)
+
+<script type="text/javascript">
+    ko.validation.locale('zh-CN');
+    var configModel = function (id, name, text) {
+        this.ID = ko.observable(id);
+        this.Name = ko.observable(name).extend({ required: true });
+        this.Description = ko.observable(text).extend({ required: true });
+    };
+    var viewModel = new configModel("", "", "");
+    viewModel.errors = ko.validation.group(viewModel);
+    function AddModel() {
+
+        $("#myModalLabel").text("添加")
+        $("#modal-body").load('@Url.Action("Create")', function () {
+            viewModel.ID("");
+            viewModel.Name("");
+            viewModel.Description("");
+         
+            ko.applyBindings(viewModel, document.getElementById("appConfig_form"));
+            $('#myModal').modal('show');
+
+        })
+
+    }
+
+    function EditModel() {
+        var nodes = $("#appConfigTable").bootstrapTable("getSelections");
+        if (nodes.length < 1) {
+            $("#modal-alert").text("请选择要修改的数据");
+            $('#modal-danger').modal('show');
+        }
+        var item = nodes[0];
+        viewModel.ID(item.ID);
+       
+        viewModel.Name(item.Name);
+        viewModel.Description(item.Description);
+        $("#myModalLabel").text("修改")
+        $("#modal-body").load('@Url.Action("Create")', function () {
+            ko.applyBindings(viewModel, document.getElementById("appConfig_form"));
+            $('#myModal').modal('show');
+
+        })
+    }
+    function RemoveModel() {
+        var nodes = $("#appConfigTable").bootstrapTable("getSelections");
+        if (nodes.length < 1) {
+            $("#modal-alert").text("请选择要删除的数据");
+            $('#modal-danger').modal('show');
+            return;
+        }
+        bootbox.confirm("确认要删除？", function (result) {
+            if (result) {
+                $.post('@Url.Action("Delete")' + '/' + nodes[0].ID, function (data) {
+                    if (data.state) {
+                        $('#appConfigTable').bootstrapTable('refresh', { silent: true });
+                    } else {
+
+                        $("#modal-alert").text(data.message);
+                        $('#modal-danger').modal('show');
+                    }
+                }, 'json');
+            }
+        });
+    }
+    $("#btnSave").click(function () {
+        if (viewModel.errors().length === 0) {
+            var url = "@Url.Action("Create")";
+            if (ko.toJS(viewModel.ID) != -1) {
+                url = "@Url.Action("Update")";
+            }
+
+            $.post(url, $("#appConfig_form").serialize(), function (data) {
+                if (data.state) {
+                    $('#myModal').modal('hide');
+                    $('#appConfigTable').bootstrapTable('refresh', { silent: true });
+                }
+                else {
+                    $("#modal-alert").text(data.message);
+                    $('#modal-danger').modal('show');
+                }
+            });
+        }
+        else {
+
+            viewModel.errors.showAllMessages();
+        }
+    });
+</script>

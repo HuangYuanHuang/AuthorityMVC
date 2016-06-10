@@ -98,7 +98,9 @@ namespace Common.ExpandMVC.BootstrappTable.Controls
             }
             if (field == "State")
             {
+              
                 column.Attributes.Add("data-radio", "true");
+              
             }
             column.InnerHtml = title;
             _columns.Add(column);

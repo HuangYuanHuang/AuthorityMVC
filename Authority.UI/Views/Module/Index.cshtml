@@ -18,14 +18,17 @@
 
 
 <script type="text/javascript">
-
-    var moduleModel = function (id,name,sort,descprtion,className) {
+    ko.validation.locale('zh-CN');
+    var moduleModel = function (id,name,sort,descprtion,className,url) {
         this.ID = ko.observable(id);
-        this.Name = ko.observable(name);
-        this.Sort = ko.observable(sort);
+        this.Name = ko.observable(name).extend({required:true});
+        this.Sort = ko.observable(sort).extend({ required: true });
         this.Description = ko.observable(descprtion);
+        this.Url = ko.observable(url).extend({ required: true });
         this.ClassName = ko.observable(className);
         this.Authoritys = ko.observableArray();
+        this.AppConfigs = ko.observableArray();
+        this.errors = ko.validation.group(this);
     };
     var authModel = function (id, name) {
         this.id = id;
@@ -35,25 +38,29 @@
         var self = this;
         self.Authoritys = ko.observableArray();
         self.Module = ko.observable();
-
+        self.AppConfigs = ko.observableArray();
         $.post("@Url.Content("~/Authority/List")", function (data) {
 
             for (var c in data) {
-                self.Authoritys.push(new authModel(data[c].ID, data[c].Name));
+                self.Authoritys.push(new authModel(data[c].Value, data[c].Name));
+            }
+        })
+
+        $.post("@Url.Content("~/AppConfig/List")", function (data) {
+            for (var c in data) {
+                self.AppConfigs.push(new authModel(data[c].ID, data[c].Name));
             }
         })
     };
 
     var viewModel = new mainView();
-
-
-
     function AddModel() {
 
         $("#myModalLabel").text("添加")
         $("#modal-body").load('@Url.Action("Create")', function () {
             viewModel.Module = new moduleModel(-1, "", 1, "", "glyphicon glyphicon-th-large");
             viewModel.Module.Authoritys = viewModel.Authoritys;
+            viewModel.Module.AppConfigs = viewModel.AppConfigs;
             ko.applyBindings(viewModel.Module, document.getElementById("module_form"));
 
             $('#myModal').modal('show');
@@ -76,5 +83,46 @@
     $("#modal-body").on('click', ".bs-glyphicons-list li", function (e) {
         viewModel.Module.ClassName($("span", this).attr("class"));
 
+    });
+    $("#btnSave").click(function () {
+        if (viewModel.Module.errors().length === 0) {
+            if (treeNode == null || treeNode.nodeId < 0) {
+                $("#modal-alert").text("上级模块不能为空");
+                $('#modal-danger').modal('show');
+                return;
+            }
+            var url = "@Url.Action("Create")";
+            if (ko.toJS(viewModel.Module.ID) != -1) {
+                url = "@Url.Action("Update")";
+            }
+
+            var auths = $("#e2").select2("val");
+            var authValue = 0;
+            for (var c in auths)
+            {
+                authValue = authValue ^ auths[c];
+            }
+            if (authValue == 0) {
+                $("#modal-alert").text("模块权限不能为空");
+                $('#modal-danger').modal('show');
+                return;
+            }
+            var postData = $("#module_form").serialize() + "&Authority=" + authValue;
+            postData = postData + "&ParentID=" + treeNode.id;
+            $.post(url, postData, function (data) {
+                if (data.state) {
+                    $('#myModal').modal('hide');
+                    $('#treeGrid').treegrid('refresh');
+                }
+                else {
+                    $("#modal-alert").text(data.message);
+                    $('#modal-danger').modal('show');
+                }
+            });
+        }
+        else {
+
+            viewModel.Module.errors.showAllMessages();
+        }
     });
 </script>

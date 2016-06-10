@@ -1054,7 +1054,7 @@
 
                     text = [that.options.cardView ?
                         '<div class="card-view">' : '<td class="bs-checkbox">',
-                        '<input' +
+                        '<label><input' +
                             sprintf(' data-index="%s"', i) +
                             sprintf(' name="%s"', that.options.selectItemName) +
                             sprintf(' type="%s"', type) +
@@ -1063,7 +1063,7 @@
                                 (value && value.checked) ? 'checked' : undefined) +
                             sprintf(' disabled="%s"', !column.checkboxEnabled ||
                                 (value && value.disabled) ? 'disabled' : undefined) +
-                            ' />',
+                            ' /><span class="text"> </span></label>',
                         that.options.cardView ? '</div>' : '</td>'].join('');
                 } else {
                     value = typeof value === 'undefined' || value === null ?

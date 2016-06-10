@@ -13,7 +13,14 @@
                 <input class="form-control text-box single-line" id="Name" name="Name" data-bind="value:Name" type="text" value="" placeholder="请输入模块名称" />
             </div>
         </div>
+        <div class="form-group" id="authority_group">
+            <label class="control-label col-md-3" for="AppID">APP模块</label>
+            <div class="col-md-9">
+                <select class="form-control" id="AppID" name="AppID" data-bind="options:AppConfigs,optionsText:'name',optionsValue:'id'"></select>
 
+
+            </div>
+        </div> 
         <div class="form-group">
             <label class="control-label col-md-3" for="ParentID">上级模块</label>
             <div class="col-md-9">
@@ -22,14 +29,29 @@
                
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label col-md-3" for="ParentID">子级菜单</label>
+            <div class="col-md-9">
+                <label>
+                    <input class="checkbox-slider colored-blue" name="HasChildren" type="checkbox">
+                    <span class="text"></span>
+                </label>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-3" for="Url">Url</label>
+            <div class="col-md-9">
+               
+                <input class="form-control text-box single-line" id="Url" name="Url" data-bind="value:Url" type="text" value="" placeholder="请输入模块地址" />
+            </div>
+        </div>
         <div class="form-group" id="authority_group">
             <label class="control-label col-md-3" for="Authority">权限</label>
             <div class="col-md-9">
                 <select id="e2" multiple="multiple" style="width: 100%;" data-bind="options:Authoritys,optionsText:'name',optionsValue:'id'">
                  
                 </select>
-
-
             </div>
         </div>
 
@@ -43,7 +65,7 @@
         <div class="form-group">
             <label class="control-label col-md-3" for="Description">描述</label>
             <div class="col-md-9">
-                <textarea class="form-control" id="Description" name="Description" placeholder="模块相关说明" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 48px;"></textarea>
+                <textarea class="form-control" id="Description" name="Description" data-bind="value:Description" placeholder="模块相关说明" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 48px;"></textarea>
 
             </div>
         </div>
@@ -61,7 +83,7 @@
     </div>
 
 </form>
-<div class="bs-glyphicons" style="height:300px; overflow-y:auto">
+<div class="bs-glyphicons" style="height:200px; overflow-y:auto">
     <ul class="bs-glyphicons-list">
         <li>
             <span class="glyphicon glyphicon-asterisk"></span>

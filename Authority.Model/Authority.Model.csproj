@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfigViewModel.cs" />
     <Compile Include="AuthorityViewModel.cs" />
     <Compile Include="ModuleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

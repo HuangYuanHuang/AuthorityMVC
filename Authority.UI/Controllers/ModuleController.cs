@@ -6,15 +6,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
-
+using Authority.Service;
 namespace Authority.UI.Controllers
 {
     public class ModuleController : BaseController<ModuleViewModel, int>
     {
+        ModuleService moduleService = new ModuleService();
         // GET: Module
         public ActionResult Index()
         {
-            return View(new GridTreeDataModel() { TreeModels = LoadTreeDate(), Authoritys = LoadAutority() });
+            return View(new GridTreeDataModel() { TreeModels = moduleService.GetModule(), Authoritys = LoadAutority() });
         }
         public ActionResult Create()
         {
@@ -30,32 +31,23 @@ namespace Authority.UI.Controllers
         [HttpPost]
         public JsonResult Tree()
         {
-            return Json(new object[] { LoadTreeDate().BuildTreeView() });
+            return Json(new object[] { moduleService.GetModule().BuildTreeView() });
         }
-        protected IEnumerable<BaseTreeViewModel> LoadTreeDate()
-        {
-            List<ModuleViewModel> list = new List<ModuleViewModel>()
-            {
-                new ModuleViewModel() { ID=0,Name="父节点",ParentID=-1,AuthorityStr="添加 修改 删除",Url="/Module/Index"},
-                new ModuleViewModel() { ID=1,Name="子节点-1",ParentID=0,AuthorityStr="添加 修改 删除",Url="/Module/Index"},
-                new ModuleViewModel() { ID=2,Name="子节点-1",ParentID=0,AuthorityStr="添加 修改 删除",Url="/Module/Index"},
-                new ModuleViewModel() { ID=3,Name="子节点-1-1",ParentID=2,AuthorityStr="添加 修改 删除",Url="/Module/Index"},
-            };
-            return list;
-        }
+
         protected override Task<int> AddAsync(ModuleViewModel model)
         {
-            throw new NotImplementedException();
+           
+            return moduleService.AddOrUpdateModule(model);
         }
 
         protected override Task<ModuleViewModel> DetailsAsync(int id)
         {
-            throw new NotImplementedException();
+            return moduleService.GetModule(id);
         }
 
         protected override IEnumerable<ModuleViewModel> ListViewModel()
         {
-            throw new NotImplementedException();
+            return moduleService.GetModule();
         }
 
         protected override IEnumerable<ModuleViewModel> ListViewModel(int id)
@@ -65,12 +57,13 @@ namespace Authority.UI.Controllers
 
         protected override Task<int> RemoveAsync(int id)
         {
-            throw new NotImplementedException();
+            return moduleService.DeleteModule(id);
         }
 
         protected override Task<int> UpdateAsync(ModuleViewModel model)
         {
-            throw new NotImplementedException();
+           
+            return moduleService.AddOrUpdateModule(model);
         }
     }
 }

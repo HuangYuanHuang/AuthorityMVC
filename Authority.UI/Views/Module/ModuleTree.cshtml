@@ -2,6 +2,7 @@
 <div class="ModuleTree" style="display:none;z-index:9999;position:absolute"></div>
 
 <script type="text/javascript">
+    var treeNode = null;
     $(function () {
       
         $("#treeSelect").click(function () {
@@ -14,12 +15,10 @@
     $.post("@Url.Action("Tree")", function (data) {
         $('.ModuleTree').treeview({
             data: data,
-
-
             onNodeSelected: function (event, data) {
                 $(".ModuleTree").toggle();
                 $("#treeSelect").val(data.text);
-
+                treeNode = data;
             }
         });
     })

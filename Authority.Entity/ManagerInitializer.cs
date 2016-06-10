@@ -14,7 +14,7 @@ namespace Authority.Entity
     {
         public override void InitializeDatabase(AuthorityContext context)
         {
-            var config = new Purv_AppConfig() { Description = "权限管理平台", Name = "权限平台" };
+          /*  var config = new Purv_AppConfig() { Description = "权限管理平台", Name = "权限平台" };
             var module = new Purv_Module()
             {
                 AppID = config.AppID,
@@ -37,7 +37,7 @@ namespace Authority.Entity
             context.PurvModules.Add(module);
 
             context.SaveChanges();
-
+            */
         }
     }
 }

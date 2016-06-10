@@ -70,8 +70,7 @@ namespace System.Web.Mvc
         /// <returns>Html representation of the control.</returns>
         public static ITableBuilderT<TModel> BootstrapTable<TModel>(this HtmlHelper helper, string id, GridTreeDataModel model, string url, TablePaginationOption pagination = TablePaginationOption.none, object htmlAttributes = null)
         {
-            var obj = new TableBuilderT<TModel>(id,model, url, pagination, htmlAttributes);
-        
+            var obj = new TableBuilderT<TModel>(id,model, url, pagination, htmlAttributes);        
             return obj;
         }
     }
