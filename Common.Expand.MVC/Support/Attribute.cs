@@ -30,6 +30,22 @@ namespace Common.ExpandMVC.Support
         /// <exclude/>
         public string Value { get; set; }
     }
+
+    /// <exclude/>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ClassNameAttribute : Attribute
+    {
+        /// <exclude/>
+        public string Value { get; set; }
+    }
+
+    /// <exclude/>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class RadioStateAttribute : Attribute
+    {
+        /// <exclude/>
+        public string Value { get; set; }
+    }
     /// <exclude/>
     internal static class FieldAttributeExtensions
     {

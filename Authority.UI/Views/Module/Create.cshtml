@@ -24,9 +24,7 @@
         <div class="form-group">
             <label class="control-label col-md-3" for="ParentID">上级模块</label>
             <div class="col-md-9">
-                @{Html.RenderAction("ModuleTree");
-                }
-               
+                <select class="form-control" id="ParentID" name="ParentID" data-bind="options:TreeNodes,optionsText:'name',optionsValue:'id'"></select>
             </div>
         </div>
         <div class="form-group">

@@ -1,5 +1,5 @@
 ﻿<input class="form-control text-box single-line" id="treeSelect" name="treeSelect" type="text"  onkeydown="return false;" style= "ime-mode:disabled" value="" placeholder="请选择模块" />
-<div class="ModuleTree" style="display:none;z-index:9999;position:absolute"></div>
+<div class="ModuleTree" style="display:none;z-index:9999;position:absolute;height:300px;overflow-y:auto"></div>
 
 <script type="text/javascript">
     var treeNode = null;
@@ -8,6 +8,7 @@
         $("#treeSelect").click(function () {
             $(".ModuleTree").css("top", $("#treeSelect").position().top + $("#treeSelect").height() + 15 + "px").width($("#treeSelect").parent().width() + "px");
             $(".ModuleTree").toggle();
+          //  InitTreeSelectNode();
         });
     })
   
@@ -21,6 +22,8 @@
                 treeNode = data;
             }
         });
+        $('.ModuleTree').treeview('expandAll', { levels: 2, silent: true });
+       
     })
 
 

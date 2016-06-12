@@ -18,11 +18,14 @@ namespace Authority.Model
         public string Name { get; set; }
 
         [Display(Order = 2, Name = "图标")]
+        [ClassName]
         public string ClassName { get; set; } = "";
 
         [Display(Order = 3, Name = "排序")]
         public int Sort { get; set; }
 
+        [Display(AutoGenerateField = false)]
+        public long[] ArrayAuth { get; set; }
 
         [Display(Order = 4, Name = "子级菜单")]
         public string SubMenu { get { return HasChildren == "on" ? "是" : "否"; } }
@@ -51,33 +54,37 @@ namespace Authority.Model
 
     public static class ModuleViewModelExpand
     {
-        private static string GetAuthorityStr(long value, List<string> listStr)
+        private static Tuple<string, long[]> GetAuthorityStr(long value, List<Tuple<string,long>> listStr)
         {
             string res = "";
             char[] arr = Convert.ToString(value, 2).ToCharArray();
             int index = 0;
+            List<long> listAuth = new List<long>();
             for (int i = arr.Length - 1; i >= 0; i--)
             {
                 if (arr[i] == '1')
                 {
-                    res += " " + listStr[index];
+                    res += " " + listStr[index].Item1;
+                    listAuth.Add(listStr[index].Item2);
                 }
                 index++;
             }
-            return res.Trim();
+            return new Tuple<string, long[]>(res.Trim(), listAuth.ToArray());
 
         }
         public static IEnumerable<ModuleViewModel> ModuleEntityToViewModel(this IEnumerable<Purv_Module> list, IEnumerable<Purv_Authority> listAuth, IEnumerable<Purv_AppConfig> configs)
         {
-            var dict = listAuth.OrderBy(d => d.AuthorityValue).Select(d => d.AuthorityName).ToList();
+            var dict = listAuth.OrderBy(d => d.AuthorityValue).Select(d => new Tuple<string, long>(d.AuthorityName, d.AuthorityValue)).ToList();
 
             foreach (var item in list)
             {
+                var temp = GetAuthorityStr(item.Authority, dict);
                 yield return new ModuleViewModel()
                 {
                     Authority = item.Authority,
-                    AuthorityStr = GetAuthorityStr(item.Authority, dict),
+                    AuthorityStr = temp.Item1,
                     ClassName = item.ClassName,
+                    ArrayAuth = temp.Item2,
                     Description = item.Description,
                     ID = item.ModuleId,
                     Name = item.ModuleName,

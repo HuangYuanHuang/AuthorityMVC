@@ -51,16 +51,21 @@ namespace Common.ExpandMVC.TreeGrid.Controls
         {
             TagBuilder trBuilder = new TagBuilder("tr");
             List<TagBuilder> listColumn = new List<TagBuilder>();
+
             typeof(TModel).GetSortedProperties().ToDictionary(x => x.Name, x => x).ForEach(pair =>
             {
                 DisplayAttribute display = pair.Value.GetCustomAttribute<DisplayAttribute>();
                 HiddenInputAttribute hidden = pair.Value.GetCustomAttribute<HiddenInputAttribute>();
-
-                if (hidden == null || hidden.DisplayValue == true)
+                RadioStateAttribute state = pair.Value.GetCustomAttribute<RadioStateAttribute>();
+                if (state == null)
                 {
-                    if (display == null || display.GetAutoGenerateField() == null || display.AutoGenerateField == true)
+                    if (hidden == null || hidden.DisplayValue == true)
                     {
-                        action(pair, display, listColumn, value);
+                        if (display == null || display.GetAutoGenerateField() == null || display.AutoGenerateField == true)
+                        {
+                            action(pair, display, listColumn, value);
+
+                        }
                     }
                 }
             });
@@ -89,10 +94,17 @@ namespace Common.ExpandMVC.TreeGrid.Controls
             var tag = new TagBuilder("td");
             if (display != null && !string.IsNullOrEmpty(display.GetName()))
             {
-                if (pair.Value.Name == "State")
+                tag.AddCssClass(pair.Key);
+                TreeTextAttribute treeText = pair.Value.GetCustomAttribute<TreeTextAttribute>();
+                ClassNameAttribute className = pair.Value.GetCustomAttribute<ClassNameAttribute>();
+                if (treeText != null)
                 {
-                   
-                    tag.InnerHtml = "<label><input name=\"form-field-radio\" type=\"radio\" /><span class=\"text\"></span></label> ";
+
+                    tag.InnerHtml = $"<label><input name=\"form-field-radio\" type=\"radio\" /><span class=\"text\">{pair.Value.GetValue(value)}</span></label> ";
+                }
+                else if (className != null)
+                {
+                    tag.InnerHtml = $"<span class='{pair.Value.GetValue(value)}'></span> ";
                 }
                 else
                     tag.SetInnerText(pair.Value.GetValue(value).ToString());
@@ -114,6 +126,7 @@ namespace Common.ExpandMVC.TreeGrid.Controls
                     tagBuilder.AddCssClass("treegrid-parent-" + item.ParentID);
                 }
                 tagBuilder.AddCssClass("treegrid-" + item.ID);
+                tagBuilder.Attributes.Add("id", item.ID.ToString());
                 builder.InnerHtml += tagBuilder;
             }
         }

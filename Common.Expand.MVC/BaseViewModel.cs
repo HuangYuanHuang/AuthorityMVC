@@ -1,4 +1,5 @@
 ﻿using Common.ExpandMVC.Authority;
+using Common.ExpandMVC.Support;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,7 @@ namespace Common.ExpandMVC
 
 
         [Display(Order = -10, Name = " ")]
+        [RadioState]
 
         public bool State { get; set; }
     }
@@ -34,17 +36,28 @@ namespace Common.ExpandMVC
         [Display(AutoGenerateField = false)]
         public int ParentID { get; set; }
 
+        [Display(AutoGenerateField = false)]
+        public string ParentName { get; set; }
 
     }
 
     public class TreeViewJsonModel
     {
-        public int id { get; set; }
+        public int nodeId { get; set; }
 
         public int parent { get; set; }
         public string text { get; set; }
 
+        public string href { get; set; }
+
         public List<TreeViewJsonModel> nodes { get; set; } = new List<TreeViewJsonModel>();
+    }
+
+    public class SelectTreeJsonModel
+    {
+        public int id { get; set; }
+
+        public string text { get; set; }
     }
     public class GridTreeDataModel
     {

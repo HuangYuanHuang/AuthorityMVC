@@ -13,21 +13,22 @@
 <script src="~/Scripts/bootstrap-treeview.js"></script>
 <h2>模块配置</h2>
 
-@(Html.TreeGrid<Authority.Model.ModuleViewModel>(Model, "treeGrid", "table-bordered table-striped table-condensed"))
+@(Html.TreeGrid<Authority.Model.ModuleViewModel>(Model, "treeGrid", "table-bordered table-striped table-condensed table-hover"))
 
 
 
 <script type="text/javascript">
     ko.validation.locale('zh-CN');
-    var moduleModel = function (id,name,sort,descprtion,className,url) {
+    var moduleModel = function (id, name, sort, descprtion, className, url) {
         this.ID = ko.observable(id);
-        this.Name = ko.observable(name).extend({required:true});
+        this.Name = ko.observable(name).extend({ required: true });
         this.Sort = ko.observable(sort).extend({ required: true });
         this.Description = ko.observable(descprtion);
         this.Url = ko.observable(url).extend({ required: true });
         this.ClassName = ko.observable(className);
         this.Authoritys = ko.observableArray();
         this.AppConfigs = ko.observableArray();
+        this.TreeNodes = ko.observableArray();
         this.errors = ko.validation.group(this);
     };
     var authModel = function (id, name) {
@@ -39,6 +40,7 @@
         self.Authoritys = ko.observableArray();
         self.Module = ko.observable();
         self.AppConfigs = ko.observableArray();
+        self.TreeNodes = ko.observableArray();
         $.post("@Url.Content("~/Authority/List")", function (data) {
 
             for (var c in data) {
@@ -51,16 +53,26 @@
                 self.AppConfigs.push(new authModel(data[c].ID, data[c].Name));
             }
         })
+
+        $.post("@Url.Action("TreeSelect")", function (data) {
+            for (var c in data) {
+                self.TreeNodes.push(new authModel(data[c].id, data[c].text));
+            }
+        })
     };
 
     var viewModel = new mainView();
+    viewModel.Module = new moduleModel(-1, "", 1, "", "glyphicon glyphicon-th-large");
+    viewModel.Module.Authoritys = viewModel.Authoritys;
+    viewModel.Module.AppConfigs = viewModel.AppConfigs;
+    viewModel.Module.TreeNodes = viewModel.TreeNodes;
     function AddModel() {
 
         $("#myModalLabel").text("添加")
         $("#modal-body").load('@Url.Action("Create")', function () {
-            viewModel.Module = new moduleModel(-1, "", 1, "", "glyphicon glyphicon-th-large");
-            viewModel.Module.Authoritys = viewModel.Authoritys;
-            viewModel.Module.AppConfigs = viewModel.AppConfigs;
+            viewModel.Module.ID(-1);
+            viewModel.Module.Name("");
+            viewModel.Module.Url("");
             ko.applyBindings(viewModel.Module, document.getElementById("module_form"));
 
             $('#myModal').modal('show');
@@ -72,12 +84,80 @@
         })
 
     }
+
+    var selectNodeId = 0;
+    function EditModel() {
+        var id = $(".table tbody tr input[type='radio']:checked").parent().parent().parent().attr("id");
+        if (id == null || id < 0) {
+            $("#modal-alert").text("请选择要修改的数据");
+            $('#modal-danger').modal('show');
+            return;
+        }
+        $.post("@Url.Action("Details")" + "/" + id, function (data) {
+            $("#myModalLabel").text("更新");
+            $("#modal-body").load('@Url.Action("Create")', function () {
+                viewModel.Module.ID(data.data.ID);
+                viewModel.Module.Name(data.data.Name);
+                viewModel.Module.Url(data.data.Url);
+                viewModel.Module.Description(data.data.Description);
+                viewModel.Module.Sort(data.data.Sort);
+                viewModel.Module.ClassName(data.data.ClassName);
+
+                ko.applyBindings(viewModel.Module, document.getElementById("module_form"));
+                selectNodeId = data.data.ParentID;
+                $('#myModal').modal('show');
+                $("#AppID").find("option[value='" + data.data.AppID + "']").attr("selected", true);
+                $("#ParentID").find("option[value='" + data.data.ParentID + "']").attr("selected", true);
+                if (data.data.HasChildren == "on") {
+                    $("input[name='HasChildren']").prop("checked", true);
+                }
+                $("#e2").select2({
+                    placeholder: "选择基本权限",
+                    allowClear: true
+                });
+            
+                $("#e2").select2("val", data.data.ArrayAuth);
+             
+               
+            })
+
+        }, 'json')
+    }
+
+
+    function RemoveModel() {
+        var id = $(".table tbody tr input[type='radio']:checked").parent().parent().parent().attr("id");
+        if (id == null || id < 0) {
+            $("#modal-alert").text("请选择要删除的数据");
+            $('#modal-danger').modal('show');
+            return;
+        }
+        bootbox.confirm("确认要删除？", function (result) {
+            if (result) {
+                $.post('@Url.Action("Delete")' + '/' + id, function (data) {
+                    if (data.state) {
+                        $(".table tbody tr[id='" + id + "']").remove();
+                    } else {
+
+                        $("#modal-alert").text(data.message);
+                        $('#modal-danger').modal('show');
+                    }
+                }, 'json');
+            }
+        });
+    }
     $(document).ready(function () {
         $('#treeGrid').treegrid({
             expanderExpandedClass: 'glyphicon glyphicon-minus',
-            expanderCollapsedClass: 'glyphicon glyphicon-plus'
-        });
+            expanderCollapsedClass: 'glyphicon glyphicon-plus',
 
+        });
+        $(".table tbody tr").click(function () {
+
+            $(".table tbody tr input[type='radio']:checked").not(this).prop("checked", false);
+            $("input[type='radio']", this).prop("checked", true);
+
+        });
     });
 
     $("#modal-body").on('click', ".bs-glyphicons-list li", function (e) {
@@ -86,11 +166,7 @@
     });
     $("#btnSave").click(function () {
         if (viewModel.Module.errors().length === 0) {
-            if (treeNode == null || treeNode.nodeId < 0) {
-                $("#modal-alert").text("上级模块不能为空");
-                $('#modal-danger').modal('show');
-                return;
-            }
+         
             var url = "@Url.Action("Create")";
             if (ko.toJS(viewModel.Module.ID) != -1) {
                 url = "@Url.Action("Update")";
@@ -98,8 +174,7 @@
 
             var auths = $("#e2").select2("val");
             var authValue = 0;
-            for (var c in auths)
-            {
+            for (var c in auths) {
                 authValue = authValue ^ auths[c];
             }
             if (authValue == 0) {
@@ -108,11 +183,11 @@
                 return;
             }
             var postData = $("#module_form").serialize() + "&Authority=" + authValue;
-            postData = postData + "&ParentID=" + treeNode.id;
+        
             $.post(url, postData, function (data) {
                 if (data.state) {
                     $('#myModal').modal('hide');
-                    $('#treeGrid').treegrid('refresh');
+                    $('#treeGrid').treegrid('render');
                 }
                 else {
                     $("#modal-alert").text(data.message);

@@ -19,6 +19,7 @@ namespace Authority.UI.Controllers
         }
         public ActionResult Create()
         {
+           
             return View();
         }
 
@@ -33,7 +34,11 @@ namespace Authority.UI.Controllers
         {
             return Json(new object[] { moduleService.GetModule().BuildTreeView() });
         }
-
+        [HttpPost]
+        public JsonResult TreeSelect()
+        {
+            return Json( moduleService.GetModule().BuildTreeView().TreeViewToSelectJsonModel());
+        }
         protected override Task<int> AddAsync(ModuleViewModel model)
         {
            
