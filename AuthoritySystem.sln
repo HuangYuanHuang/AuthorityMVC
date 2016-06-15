@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authority.Model", "Authorit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ExpandMVC", "Common.Expand.MVC\Common.ExpandMVC.csproj", "{9DD9409B-30FE-4652-9C47-C3134F9F51F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleOauth", "ConsoleOauth\ConsoleOauth.csproj", "{4FA97DA8-E67F-4E37-B50A-643CA2BB4579}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{9DD9409B-30FE-4652-9C47-C3134F9F51F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DD9409B-30FE-4652-9C47-C3134F9F51F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DD9409B-30FE-4652-9C47-C3134F9F51F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FA97DA8-E67F-4E37-B50A-643CA2BB4579}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FA97DA8-E67F-4E37-B50A-643CA2BB4579}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FA97DA8-E67F-4E37-B50A-643CA2BB4579}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FA97DA8-E67F-4E37-B50A-643CA2BB4579}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
