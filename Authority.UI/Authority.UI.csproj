@@ -17,7 +17,7 @@
     <AssemblyName>Authority.UI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -432,6 +432,7 @@
     <Content Include="Views\Module\ModuleTree.cshtml" />
     <Content Include="Views\AppConfig\Index.cshtml" />
     <Content Include="Views\AppConfig\Create.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -478,7 +479,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>39478</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:39478/</IISUrl>
+          <IISUrl>http://localhost/Authority</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

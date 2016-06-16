@@ -1,0 +1,10 @@
+﻿@model Common.ExpandMVC.GridTreeDataModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>报警统计</h2>
+@(Html.BootstrapTable<HanatechAlarm.Models.AlarmViewModel>("alarmTable", Model, Url.Action("List"))
+    .Apply(TableOption.showRefresh, TableOption.showToggle, TableOption.showColumns, TableOption.clickToSelect).Apply(TableOption.toolbar, "#toolbar").Apply(TableOption.method, "POST")
+)

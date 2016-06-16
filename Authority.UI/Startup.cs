@@ -52,5 +52,13 @@ namespace Authority.UI
 
             return base.GrantClientCredentials(context);
         }
+        public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        {
+            var oAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+            var ticket = new AuthenticationTicket(oAuthIdentity, new AuthenticationProperties());
+            context.Validated(ticket);
+            return base.GrantResourceOwnerCredentials(context);
+        }
     }
 }
