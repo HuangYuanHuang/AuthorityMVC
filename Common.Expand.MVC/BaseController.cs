@@ -1,7 +1,9 @@
 ﻿using Common.ExpandMVC.Authority;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -9,7 +11,39 @@ using System.Web.Routing;
 
 namespace Common.ExpandMVC
 {
-    public abstract class BaseController<T, D> : Controller where T : BaseViewModel
+
+    public class OauthController : Controller
+    {
+        protected virtual string GetClient() => "1234";
+
+        protected virtual string GetSecret() => "5678";
+
+        protected virtual string GetTokenUrl() => "/authority/token";
+        protected string GetAccessToken()
+        {
+
+            var parms = new Dictionary<string, string>();
+
+            parms.Add("grant_type", "client_credentials");
+            parms.Add("client_id", GetClient());
+            parms.Add("client_secret", GetSecret());
+            HttpClient httpClient = new HttpClient();
+
+            string token = httpClient.PostAsync(GetTokenUrl(), new FormUrlEncodedContent(parms)).Result.Content.ReadAsStringAsync().Result;
+
+            try
+            {
+                return JObject.Parse(token)["access_token"].Value<string>();
+            }
+            catch (Exception)
+            {
+
+                return "invalid_client";
+            }
+            
+        }
+    }
+    public abstract class BaseController<T, D> : OauthController where T : BaseViewModel
     {
 
 
@@ -25,7 +59,7 @@ namespace Common.ExpandMVC
         protected abstract IEnumerable<T> ListViewModel(D id);
 
         protected abstract IEnumerable<T> ListViewModel();
-        protected BaseAuthority LoadAutority()
+        protected virtual BaseAuthority LoadAutority()
         {
             BaseAuthority model = new BaseAuthority(); //glyphicon glyphicon-trash
             model.ListAuthButtons.Add(new AuthorityButton());

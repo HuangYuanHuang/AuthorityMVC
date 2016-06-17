@@ -19,6 +19,11 @@ namespace Authority.UI.Controllers
             return View(new GridTreeDataModel() { Authoritys = LoadAutority() });
         }
 
+        [Authorize]
+        public JsonResult ListAuhth()
+        {
+            return Json(service.GetAuthority(), JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult Create()
         {
@@ -29,7 +34,7 @@ namespace Authority.UI.Controllers
         {
             return View();
         }
-     
+
         protected override Task<int> AddAsync(AuthorityViewModel model)
         {
             return service.AddOrUpdateAuthority(model);
